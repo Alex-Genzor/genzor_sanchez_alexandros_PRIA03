@@ -2,10 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 
 public class MoveToTargetAgent : Agent
 {
+    [SerializeField] private Transform target;
+
+    // refactor pending
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation((Vector2)transform.localPosition);
+        sensor.AddObservation((Vector2)target.localPosition);
+        
+    }
+
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveX = actions.ContinuousActions[0];
@@ -17,6 +28,8 @@ public class MoveToTargetAgent : Agent
 
     }
 
+    
+    
     /*// Start is called before the first frame update
     void Start()
     {
