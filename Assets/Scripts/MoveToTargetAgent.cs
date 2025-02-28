@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class MoveToTargetAgent : Agent
 {
     [SerializeField] private Transform target;
+    [SerializeField] private SpriteRenderer bgSpriteRenderer;
 
     // refactor pending
     public override void CollectObservations(VectorSensor sensor)
@@ -46,11 +47,13 @@ public class MoveToTargetAgent : Agent
         if (collision.TryGetComponent(out Target target))
         {
             AddReward(10f);
+            bgSpriteRenderer.color = Color.green;
             EndEpisode();
 
         } else if (collision.TryGetComponent(out Wall wall))
         {
             AddReward(-2f);
+            bgSpriteRenderer.color = Color.red;
             EndEpisode();
 
         }
