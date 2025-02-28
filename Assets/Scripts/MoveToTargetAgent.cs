@@ -31,13 +31,19 @@ public class MoveToTargetAgent : Agent
     // refactor pending
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float moveX = actions.ContinuousActions[0];
-        float moveY = actions.ContinuousActions[1];
+        // float moveX = actions.ContinuousActions[0];
+        // float moveY = actions.ContinuousActions[1];
+        
+        Vector2 move = new Vector2(actions.ContinuousActions[0], 
+            actions.ContinuousActions[1]);
 
         float movementSpeed = 5f;
         
-        transform.localPosition += new Vector3(moveX, moveY, 0) * 
+        transform.localPosition += new Vector3(move.x, move.y) * 
                                    movementSpeed * Time.deltaTime;
+        
+        /*transform.localPosition += new Vector3(moveX, moveY, 0) * 
+                                   movementSpeed * Time.deltaTime;*/
 
     }
 
@@ -46,17 +52,29 @@ public class MoveToTargetAgent : Agent
     {
         if (collision.TryGetComponent(out Target target))
         {
-            AddReward(10f);
+            /*AddReward(10f);
             bgSpriteRenderer.color = Color.green;
-            EndEpisode();
+            EndEpisode();*/
+            
+            CollisionResponse(10f, Color.green);
 
         } else if (collision.TryGetComponent(out Wall wall))
         {
-            AddReward(-2f);
+            /*AddReward(-2f);
             bgSpriteRenderer.color = Color.red;
-            EndEpisode();
+            EndEpisode();*/
+            
+            CollisionResponse(-2f, Color.red);
 
         }
+        
+    }
+
+    private void CollisionResponse(float reward, Color colour)
+    {
+        AddReward(reward);
+        bgSpriteRenderer.color = colour;
+        EndEpisode();
         
     }
 
