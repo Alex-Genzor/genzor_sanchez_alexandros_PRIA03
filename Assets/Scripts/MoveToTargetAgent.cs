@@ -19,6 +19,15 @@ public class MoveToTargetAgent : Agent
         
     }
 
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
+
+        continuousActions[0] = Input.GetAxis("Horizontal");
+        continuousActions[1] = Input.GetAxis("Vertical");
+
+    }
+
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveX = actions.ContinuousActions[0];
