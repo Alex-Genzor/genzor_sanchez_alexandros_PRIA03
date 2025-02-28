@@ -12,7 +12,6 @@ public class MoveToTargetAgent : Agent
     [SerializeField] private Transform target;
     [SerializeField] private SpriteRenderer bgSpriteRenderer;
 
-    // refactor pending
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation((Vector2)transform.localPosition);
@@ -29,6 +28,7 @@ public class MoveToTargetAgent : Agent
 
     }
 
+    // refactor pending
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveX = actions.ContinuousActions[0];
